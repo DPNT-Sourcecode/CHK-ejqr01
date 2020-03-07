@@ -69,13 +69,18 @@ namespace BeFaster.App.Solutions.CHK
                             noInOffer = Int32.Parse(o.Split('-')[0]);
                             withoutOffer = noOfItems % noInOffer;
                             withOffer = noOfItems / noInOffer;
-                            if(o.Split('*').Count()< 2) //Not offering other sku and only offers in price
+                            var total = 0;
+                            if (o.Split('*').Count() < 2) //Not offering other sku and only offers in price
+                            {
                                 offerdPrice = Int32.Parse(o.Split('-')[1]);
+                                 total = withOffer * offerdPrice + withoutOffer * priceList[item];
+                            }
                             else
                             {
                                 discount += withOffer * priceList[o.Split('*')[1].ToCharArray()[0]];
+                                 total = noOfItems * priceList[item];
                             }
-                            var total = withOffer * offerdPrice + withoutOffer * priceList[item];
+                            
                             itemTotalPrice = total <= itemTotalPrice ? total : itemTotalPrice;
                         }
 
@@ -91,3 +96,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
