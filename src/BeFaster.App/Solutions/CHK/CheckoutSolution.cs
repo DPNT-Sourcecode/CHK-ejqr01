@@ -51,12 +51,21 @@ namespace BeFaster.App.Solutions.CHK
             {new PriceOffer(){Sku="A",MinQty=5,OfferedPrice=200} },
             {new PriceOffer(){Sku="A",MinQty=3,OfferedPrice=130} },
             {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} },
-            {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} }
-
+            {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
+                        {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
+            {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
+            {new PriceOffer(){Sku="K",MinQty=2,OfferedPrice=150} },
+            {new PriceOffer(){Sku="P",MinQty=5,OfferedPrice=200} },
+            {new PriceOffer(){Sku="Q",MinQty=3,OfferedPrice=80} },
+            {new PriceOffer(){Sku="U",MinQty=4,OfferedPrice=120} },
+            {new PriceOffer(){Sku="V",MinQty=3,OfferedPrice=130} },
+            {new PriceOffer(){Sku="V",MinQty=2,OfferedPrice=90} }
         };
         static List<FreeProduct> freeProductsOffer = new List<FreeProduct>()
         {
-            {new FreeProduct(){Sku="E",MinQty=2, OfferedProduct="B", OfferQty=1} }
+            {new FreeProduct(){Sku="E",MinQty=2, OfferedProduct="B", OfferQty=1} },
+            {new FreeProduct(){Sku="N",MinQty=3, OfferedProduct="M", OfferQty=1} },
+            {new FreeProduct(){Sku="R",MinQty=3, OfferedProduct="Q", OfferQty=1} }
         };
         static List<Product> priceList = new List<Product>()
         {
@@ -65,9 +74,28 @@ namespace BeFaster.App.Solutions.CHK
             {new Product("C",20) },
             {new Product("D",15) },
             {new Product("E",40) },
-            {new Product("F",10) }
+            {new Product("F",10) },
+            {new Product("G",20) },
+            {new Product("H",10) },
+            {new Product("I",35) },
+            {new Product("J",60) },
+            {new Product("K",80) },
+            {new Product("L",90) },
+            {new Product("M",15)},
+            {new Product("N",40) },
+            {new Product("O",10) },
+            {new Product("P",50) },
+            {new Product("Q",30) },
+            {new Product("R",50) },
+            {new Product("S",30) },
+            {new Product("T",20) },
+            {new Product("U",40) },
+            {new Product("V",50) },
+            {new Product("W",20) },
+            {new Product("X",90) },
+            {new Product("Y",10) },
+            {new Product("Z",50) }
         };
-
         static void ApplyOffers()
         {
             foreach (var item in shoppingList)
@@ -154,3 +182,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
