@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BeFaster.App.Solutions.CHK;
+using BeFaster.App.Solutions.SUM;
+using NUnit.Framework;
 
 namespace BeFaster.App.Tests.Solutions.CHK
 {
-    class CHKSolutionTest
+    [TestFixture]
+    public class CHKSolutionTest
     {
+        [TestCase("A", ExpectedResult = true)]
+        public bool CheckIfIsLegalShoppingList(string skus)
+        {
+            return CheckoutSolution.IsLegalInput(skus);
+        }
     }
 }
+

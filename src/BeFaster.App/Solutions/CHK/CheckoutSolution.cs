@@ -27,9 +27,9 @@ namespace BeFaster.App.Solutions.CHK
             }
             return false;
         }
-        private static bool IsLegalInput(string skus)
+        public static bool IsLegalInput(string skus)
         {
-            if (Regex.Matches(skus, @"[A-D]").Count > 0) 
+            if (Regex.Matches(skus, @"^[A-D]+$").Count > 0) 
                 return false;
             return true;
         }
@@ -66,4 +66,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
