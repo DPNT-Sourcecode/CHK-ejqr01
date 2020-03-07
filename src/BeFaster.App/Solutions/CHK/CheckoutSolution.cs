@@ -62,12 +62,12 @@ namespace BeFaster.App.Solutions.CHK
             {
                 var noOfItems = shoppingList.Where(x => x == item).Count();
                 if(totalPricePerItem.ContainsKey(item))
-                    {
-                        var temp = totalPricePerItem[item] + GetTotalPrice(item, noOfItems, shoppingList);
-                        totalPricePerItem[item] = Math.Max(totalPricePerItem[item], 0);
-                    }
-                    else
-                totalPricePerItem.Add(item, GetTotalPrice(item, noOfItems, shoppingList));
+                {
+                    var temp = totalPricePerItem[item] + GetTotalPrice(item, noOfItems, shoppingList);
+                    totalPricePerItem[item] = Math.Max(totalPricePerItem[item], 0);
+                }
+                else
+                    totalPricePerItem.Add(item, GetTotalPrice(item, noOfItems, shoppingList));
             }
             });
 
@@ -100,6 +100,12 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     withOffer = Math.Min(withOffer, shoppingList.Count(x => x == o.Split('*')[1].ToCharArray()[0]));
                     total = noOfItems * priceList[sku];
+                    if (totalPricePerItem.ContainsKey(sku))
+                    {
+                        totalPricePerItem[o.Split('*')[1].ToCharArray()[1]] = totalPricePerItem[o.Split('*')[1].ToCharArray()[1]] -totalPricePerItem[sku];
+                    }
+                    else
+                        totalPricePerItem.Add(sku, GetTotalPrice(sku, noOfItems, shoppingList));
                 }
 
                 itemTotalPrice = total <= itemTotalPrice ? total : itemTotalPrice;
@@ -108,4 +114,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
