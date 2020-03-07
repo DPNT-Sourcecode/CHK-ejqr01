@@ -29,8 +29,13 @@ namespace BeFaster.App.Solutions.CHK
         }
         public static bool IsLegalInput(string skus)
         {
-            if (Regex.Matches(skus, @"^[A-D]+$").Count > 0) 
-                return false;
+            var items = skus.ToCharArray().ToList();
+            foreach (var item in items)
+            {
+                if (!priceList.ContainsKey(x)) return false;
+
+            }
+         
             return true;
         }
         public static int ComputePrice(string skus)
@@ -66,5 +71,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
