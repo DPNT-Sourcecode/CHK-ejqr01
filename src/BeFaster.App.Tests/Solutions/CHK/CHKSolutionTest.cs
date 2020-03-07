@@ -12,15 +12,15 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [TestCase("AAA", ExpectedResult = true)]
         public bool CheckIfIsLegalShoppingListAndReturnTrue(string skus)
         {
-            return CheckoutSolution.IsLegalInput(skus);
+            return CheckoutSolution.isValidSkus(skus);
         }
         [TestCase("-", ExpectedResult = false)]
         [TestCase("", ExpectedResult = false)]
         [TestCase("  ", ExpectedResult = false)]
-        [TestCase("E", ExpectedResult = false)]
+        [TestCase("F", ExpectedResult = false)]
         public bool CheckIfIsLegalShoppingListAndReturnFalse(string skus)
         {
-            return CheckoutSolution.IsLegalInput(skus);
+            return CheckoutSolution.isValidSkus(skus);
         }
         [TestCase("A", ExpectedResult = 50)]
         [TestCase("AA", ExpectedResult = 100)]

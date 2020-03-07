@@ -1,116 +1,136 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace BeFaster.App.Solutions.CHK
 {
+    class PriceOffer
+    {
+        public string Sku { get; set; }
+        public int MinQty { get; set; }
+        public int OfferedPrice { get; set; }
+    }
+    class FreeProduct
+    {
+        public string Sku { get; set; }
+        public int MinQty { get; set; }
+        public string OfferedProduct { get; set; }
+        public int OfferQty { get; set; }
+    }
+    class Product
+    {
+        public Product(string sku, int price)
+        {
+            Sku = sku;
+            Price = price;
+        }
+
+        public string Sku { get; set; }
+        public int Price { get; set; }
+    }
+    class BasketItem
+    {
+        public BasketItem(string sku, int qty, int unitPrice)
+        {
+            Sku = sku;
+            Qty = qty;
+            UnitPrice = unitPrice;
+            SubTotal = unitPrice * qty;
+        }
+
+        public string Sku { get; set; }
+        public int Qty { get; set; }
+        public int UnitPrice { get; set; }
+        public int SubTotal { get; set; }
+        public int Discount { get; set; }
+        public int Total { get; set; }
+    }
     public static class CheckoutSolution
     {
-        private static IDictionary<char, int> totalPricePerItem = new Dictionary<char, int>();
+        static List<PriceOffer> priceOffers = new List<PriceOffer>
+        {
+            {new PriceOffer(){Sku="A",MinQty=3,OfferedPrice=130} },
+            {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} }
 
-        private static readonly IDictionary<char, int> priceList = new Dictionary<char, int>()
-        {
-            {'A',50 },
-            {'B',30 },
-            {'C',20 },
-            {'D',15 },
-            {'E',40 }
         };
-        private static readonly IDictionary<char, string> offers = new Dictionary<char, string>()
+        static List<FreeProduct> freeProductsOffer = new List<FreeProduct>()
         {
-            {'A', "3-130 ,5-200"},
-            {'B',"2-45" },
-            {'E', "2-1*B" },
+            {new FreeProduct(){Sku="E",MinQty=2, OfferedProduct="B", OfferQty=1} }
         };
-        private static bool IsValidItem(char item)
+        static List<Product> priceList = new List<Product>()
         {
-            if (priceList.ContainsKey(item))
-            {
-                return true;
-            }
-            return false;
-        }
-        public static bool IsLegalInput(string skus)
-        {
-            if (string.IsNullOrWhiteSpace(skus)) return false;
-            var items = skus.ToCharArray().ToList();
-            foreach (var item in items)
-            {
-                if (!priceList.ContainsKey(item)) return false;
+            {new Product("A",50)},
+            {new Product("B",30) },
+            {new Product("C",20) },
+            {new Product("D",15) },
+            {new Product("E",40) }
+        };
 
+        static void ApplyOffers()
+        {
+            foreach (var item in shoppingList)
+            {
+                var offer = freeProductsOffer.Find(x => x.Sku == item.Sku);
+                var withOffer = 0;
+                if (offer != null)
+                {
+                    withOffer = item.Qty / offer.MinQty;
+                    var applied = 0;
+                    if (shoppingList.Find(x => x.Sku == offer.OfferedProduct) != null)
+                    {
+                        applied = Math.Min(withOffer, shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty);
+                    }
+                    shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
+                }
+                var discountOffer = priceOffers.Find(x => x.Sku == item.Sku);
+                if (discountOffer != null)
+                {
+                    withOffer = item.Qty / discountOffer.MinQty;
+                    var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
+                    item.Discount = discount;
+                }
             }
-            return true;
         }
         public static int ComputePrice(string skus)
         {
+            if (string.IsNullOrWhiteSpace(skus)) return 0;
 
-            if (string.IsNullOrEmpty(skus)) return 0;
-            if (!IsLegalInput(skus))
-                return -1;
-            totalPricePerItem = new Dictionary<char, int>();
-        
-            List<char> shoppingList = skus.ToCharArray().ToList();
+            if (!isValidSkus(skus)) return -1;
+            shoppingList = new List<BasketItem>();
+            PrepareShoppingList(skus);
+            ApplyOffers();
 
-            var IndividualItems = shoppingList.Select(x => x).Distinct().ToList();
-            var totalPrice = 0;
-            var discount = 0;
+            var total = 0;
 
-            IndividualItems.ForEach(item =>
+            foreach (var item in shoppingList)
             {
-            if (IsValidItem(item))
-            {
-                var noOfItems = shoppingList.Where(x => x == item).Count();
-                if(totalPricePerItem.ContainsKey(item))
-                {
-                    var temp = totalPricePerItem[item] + GetTotalPrice(item, noOfItems, shoppingList);
-                    totalPricePerItem[item] = Math.Max(totalPricePerItem[item], 0);
-                }
-                else
-                    totalPricePerItem.Add(item, GetTotalPrice(item, noOfItems, shoppingList));
+                total += item.Qty * item.UnitPrice - item.Discount;
             }
-            });
-
-
-            return totalPrice-discount;
+            return total;
         }
 
-        private static int GetTotalPrice(char sku, int noOfItems, List<char> shoppingList)
+        private static void PrepareShoppingList(string skus)
         {
-            if(!offers.ContainsKey(sku))
-                return noOfItems * priceList[sku];
-            var offer = offers[sku].Split(',');
-            var noInOffer = 0;
-            var withoutOffer = 0;
-            var withOffer = 0;
-            var offerdPrice = 0;
-            var itemTotalPrice = Int32.MaxValue;
-            foreach (var o in offer)
+            foreach (var item in skus)
             {
-                noInOffer = Int32.Parse(o.Split('-')[0]);
-                withoutOffer = noOfItems % noInOffer;
-                withOffer = noOfItems / noInOffer;
-                var total = 0;
-                if (o.Split('*').Count() < 2) //Not offering other sku and only offers in price
+                if (shoppingList.Find(x => x.Sku == item.ToString()) == null)
                 {
-                    offerdPrice = Int32.Parse(o.Split('-')[1]);
-                    total = withOffer * offerdPrice + withoutOffer * priceList[sku];
+                    shoppingList.Add(new BasketItem(
+                        item.ToString(),
+                        skus.Split(item).Length - 1,
+                        priceList.Find(x => x.Sku == item.ToString()).Price
+                        ));
                 }
-                else
-                {
-                    withOffer = Math.Min(withOffer, shoppingList.Count(x => x == o.Split('*')[1].ToCharArray()[0]));
-                    total = noOfItems * priceList[sku];
-                    if (totalPricePerItem.ContainsKey(sku))
-                    {
-                        totalPricePerItem[o.Split('*')[1].ToCharArray()[1]] = totalPricePerItem[o.Split('*')[1].ToCharArray()[1]] -totalPricePerItem[sku];
-                    }
-                    else
-                        totalPricePerItem.Add(sku, GetTotalPrice(sku, noOfItems, shoppingList));
-                }
-
-                itemTotalPrice = total <= itemTotalPrice ? total : itemTotalPrice;
             }
-            return itemTotalPrice;
+        }
+        static List<BasketItem> shoppingList = new List<BasketItem>();
+        public static bool isValidSkus(string skus)
+        {
+            if (string.IsNullOrWhiteSpace(skus)) return false;
+            foreach (var item in skus)
+            {
+                if (priceList.FindAll(x => x.Sku == item.ToString()).Count < 1) return false;
+            }
+            return true;
         }
     }
 }
