@@ -19,21 +19,35 @@ namespace BeFaster.App.Solutions.CHK
             {"A", "3-130"},
             {"2B","2-45" }
         };
+        private static bool IsValidItem(string item)
+        {
+            if (string.IsNullOrWhiteSpace(item)) return false;
+            if (priceList.ContainsKey(item))
+            {
+                return true;
+            }
+            return false;
+        }
         public static int ComputePrice(string skus)
         {
+            if (string.IsNullOrEmpty(skus)) return 0;
             List<string> shoppingList = skus.Split(',').ToList();
             
             var tempList = shoppingList;
             var totalPrice = 0;
             tempList.ForEach(item => {
-                var noOfItems = shoppingList.Where(x => x == item).Count();
-                var offer = offers[item];
-                var noInOffer = Int32.Parse(offer.Split('-')[0]);
-                var withoutOffer = noOfItems % noInOffer;
-                var withOffer=noOfItems / noInOffer;
-                var offerdPrice = Int32.Parse(offer.Split('-')[1]);
-                totalPrice =totalPrice+ withOffer* offerdPrice + withOffer* priceList[item];
+                if (IsValidItem(item))
+                {
+                    var noOfItems = shoppingList.Where(x => x == item).Count();
+                    var offer = offers[item];
+                    var noInOffer = Int32.Parse(offer.Split('-')[0]);
+                    var withoutOffer = noOfItems % noInOffer;
+                    var withOffer = noOfItems / noInOffer;
+                    var offerdPrice = Int32.Parse(offer.Split('-')[1]);
+                    totalPrice = totalPrice + withOffer * offerdPrice + withOffer * priceList[item];
+                }
                 tempList.RemoveAll(x => x == item);
+
             });
             return totalPrice;
         }
