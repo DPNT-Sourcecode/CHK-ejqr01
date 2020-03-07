@@ -76,7 +76,7 @@ namespace BeFaster.App.Solutions.CHK
                                 discount += withOffer * priceList[o.Split('*')[1].ToCharArray()[0]];
                             }
                             var total = withOffer * offerdPrice + withoutOffer * priceList[item];
-                            total = total <= itemTotalPrice ? total : itemTotalPrice;
+                            itemTotalPrice = total <= itemTotalPrice ? total : itemTotalPrice;
                         }
 
                         totalPrice += itemTotalPrice;
@@ -91,5 +91,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
