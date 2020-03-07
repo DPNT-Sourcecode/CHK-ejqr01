@@ -48,6 +48,7 @@ namespace BeFaster.App.Solutions.CHK
     {
         static List<PriceOffer> priceOffers = new List<PriceOffer>
         {
+            {new PriceOffer(){Sku="A",MinQty=5,OfferedPrice=200} },
             {new PriceOffer(){Sku="A",MinQty=3,OfferedPrice=130} },
             {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} }
 
@@ -81,7 +82,7 @@ namespace BeFaster.App.Solutions.CHK
                         shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
                     }
                 }
-                var discountOffer = priceOffers.Find(x => x.Sku == item.Sku);
+                var discountOffer = priceOffers.FindAll(x => x.Sku == item.Sku).Sort(x=>x;
                 if (discountOffer != null)
                 {
                     withOffer = item.Qty / discountOffer.MinQty;
@@ -134,4 +135,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
