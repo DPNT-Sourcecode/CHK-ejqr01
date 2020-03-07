@@ -78,8 +78,8 @@ namespace BeFaster.App.Solutions.CHK
                     if (shoppingList.Find(x => x.Sku == offer.OfferedProduct) != null)
                     {
                         applied = Math.Min(withOffer, shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty);
+                        shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
                     }
-                    shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
                 }
                 var discountOffer = priceOffers.Find(x => x.Sku == item.Sku);
                 if (discountOffer != null)
@@ -134,3 +134,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
