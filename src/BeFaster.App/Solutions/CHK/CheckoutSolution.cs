@@ -50,7 +50,8 @@ namespace BeFaster.App.Solutions.CHK
         {
             {new PriceOffer(){Sku="A",MinQty=5,OfferedPrice=200} },
             {new PriceOffer(){Sku="A",MinQty=3,OfferedPrice=130} },
-            {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} }
+            {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} },
+            {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} }
 
         };
         static List<FreeProduct> freeProductsOffer = new List<FreeProduct>()
@@ -63,7 +64,8 @@ namespace BeFaster.App.Solutions.CHK
             {new Product("B",30) },
             {new Product("C",20) },
             {new Product("D",15) },
-            {new Product("E",40) }
+            {new Product("E",40) },
+            {new Product("F",10) }
         };
 
         static void ApplyOffers()
@@ -152,5 +154,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
