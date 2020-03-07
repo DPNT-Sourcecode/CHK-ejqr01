@@ -22,5 +22,11 @@ namespace BeFaster.App.Tests.Solutions.CHK
         {
             return CheckoutSolution.IsLegalInput(skus);
         }
+        [TestCase("A", ExpectedResult = 50)]
+        public int ComputeThePriceAndReturnResult(string skus)
+        {
+            return CheckoutSolution.ComputePrice(skus);
+        }
     }
 }
+
