@@ -77,7 +77,7 @@ namespace BeFaster.App.Solutions.CHK
                             }
                             else
                             {
-                                discount += withOffer * priceList[o.Split('*')[1].ToCharArray()[0]];
+                                discount += Math.Min(withOffer,shoppingList.Count(x=>x==o.Split('*')[1].ToCharArray()[0])) * priceList[o.Split('*')[1].ToCharArray()[0]];
                                  total = noOfItems * priceList[item];
                             }
                             
@@ -96,4 +96,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
