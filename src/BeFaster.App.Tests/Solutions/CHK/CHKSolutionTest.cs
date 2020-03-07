@@ -44,7 +44,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [TestCase("HHHHHHHHHH", ExpectedResult = 80)]
         [TestCase("NNNMM", ExpectedResult = 135)] 
         [TestCase("UUUUPPPPP", ExpectedResult = 320)]
-        [TestCase("RRRRRRQQ", ExpectedResult = 150)]
+        [TestCase("RRRQRRRQ", ExpectedResult = 300)]
         [TestCase("VVVVV", ExpectedResult = 220)]
         public int ComputeThePriceAndReturnResult(string skus)
         {
@@ -52,4 +52,5 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
 
