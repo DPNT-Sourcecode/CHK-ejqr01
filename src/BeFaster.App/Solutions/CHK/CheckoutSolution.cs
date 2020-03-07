@@ -80,6 +80,7 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         applied = Math.Min(withOffer, shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty);
                         shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
+                        shoppingList.Find(x => x.Sku == offer.OfferedProduct).Discount = 0;
                     }
                 }
                 var discountOffers = priceOffers.FindAll(x => x.Sku == item.Sku);
@@ -139,3 +140,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
