@@ -1,5 +1,7 @@
 ﻿using BeFaster.Runner.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -12,18 +14,28 @@ namespace BeFaster.App.Solutions.CHK
             {"C",20 },
             {"D",15 }
         };
-        private static readonly IDictionary<string, int> offers = new Dictionary<string, int>()
+        private static readonly IDictionary<string, string> offers = new Dictionary<string, string>()
         {
-            {"3A", 130},
-            {"2B",45 }
+            {"A", "3-130"},
+            {"2B","2-45" }
         };
         public static int ComputePrice(string skus)
         {
-            throw new SolutionNotImplementedException();
+            List<string> shoppingList = skus.Split(',').ToList();
+            
+            var tempList = shoppingList;
+            var totalPrice = 0;
+            tempList.ForEach(item => {
+                var noOfItems = shoppingList.Where(x => x == item).Count();
+                var offer = offers[item];
+                var noInOffer = Int32.Parse(offer.Split('-')[0]);
+                var withoutOffer = noOfItems % noInOffer;
+                var withOffer=noOfItems / noInOffer;
+                var offerdPrice = Int32.Parse(offer.Split('-')[1]);
+                totalPrice =totalPrice+ withOffer* offerdPrice + withOffer* priceList[item];
+                tempList.RemoveAll(x => x == item);
+            });
+            return totalPrice;
         }
     }
 }
-A    | 50    | 3A for 130     |
-| B    | 30    | 2B for 45      |
-| C    | 20    |                |
-| D    | 15 
