@@ -52,8 +52,8 @@ namespace BeFaster.App.Solutions.CHK
             {new PriceOffer(){Sku="A",MinQty=3,OfferedPrice=130} },
             {new PriceOffer(){Sku="B",MinQty=2,OfferedPrice=45} },
             {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
-                        {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
-            {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
+            {new PriceOffer(){Sku="H",MinQty=10,OfferedPrice=80} },
+            {new PriceOffer(){Sku="H",MinQty=5,OfferedPrice=45} },
             {new PriceOffer(){Sku="K",MinQty=2,OfferedPrice=150} },
             {new PriceOffer(){Sku="P",MinQty=5,OfferedPrice=200} },
             {new PriceOffer(){Sku="Q",MinQty=3,OfferedPrice=80} },
@@ -182,4 +182,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
