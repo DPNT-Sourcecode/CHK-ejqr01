@@ -82,13 +82,14 @@ namespace BeFaster.App.Solutions.CHK
                         shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
                     }
                 }
-                var discountOffer = priceOffers.FindAll(x => x.Sku == item.Sku).Sort(x=>x;
-                if (discountOffer != null)
+                var discountOffers = priceOffers.FindAll(x => x.Sku == item.Sku);
+                foreach (var discountOffer in discountOffers)
                 {
-                    withOffer = item.Qty / discountOffer.MinQty;
-                    var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
-                    item.Discount = discount;
+                        withOffer = item.Qty / discountOffer.MinQty;
+                        var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
+                        item.Discount = discount;
                 }
+                
             }
         }
         public static int ComputePrice(string skus)
@@ -135,5 +136,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
