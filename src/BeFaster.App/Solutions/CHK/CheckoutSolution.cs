@@ -82,7 +82,7 @@ namespace BeFaster.App.Solutions.CHK
                         var temp = shoppingList.Find(x => x.Sku == offer.OfferedProduct);
                         temp.Qty -= applied;
                         temp.Discount = 0;
-                        PriceReductionOffer(item);
+                        PriceReductionOffer(temp);
                     }
                 };
                  PriceReductionOffer(item);
@@ -149,3 +149,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
