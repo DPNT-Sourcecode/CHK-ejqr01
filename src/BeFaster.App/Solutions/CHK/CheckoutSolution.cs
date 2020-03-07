@@ -39,16 +39,22 @@ namespace BeFaster.App.Solutions.CHK
                 if (IsValidItem(item))
                 {
                     var noOfItems = shoppingList.Where(x => x == item).Count();
-                    var offer = offers[item];
-                    var noInOffer = Int32.Parse(offer.Split('-')[0]);
-                    var withoutOffer = noOfItems % noInOffer;
-                    var withOffer = noOfItems / noInOffer;
-                    var offerdPrice = Int32.Parse(offer.Split('-')[1]);
-                    totalPrice = totalPrice + withOffer * offerdPrice + withOffer * priceList[item];
+                    if(offers.ContainsKey(item))
+                    {
+                        var offer = offers[item];
+                        var noInOffer = Int32.Parse(offer.Split('-')[0]);
+                        var withoutOffer = noOfItems % noInOffer;
+                        var withOffer = noOfItems / noInOffer;
+                        var offerdPrice = Int32.Parse(offer.Split('-')[1]);
+                        totalPrice = totalPrice + withOffer * offerdPrice + withOffer * priceList[item];
+                    }
+                    else
+                    {
+                        totalPrice = noOfItems * priceList[item];
+                    }
                 }
             });
             return totalPrice;
         }
     }
 }
-
