@@ -89,7 +89,7 @@ namespace BeFaster.App.Solutions.CHK
                     withOffer = qty / discountOffer.MinQty;
                     var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
                     item.Discount = discount;
-                    qty -= withOffer;
+                    qty -= withOffer * discountOffer.MinQty;
                 }
                 
             }
@@ -138,6 +138,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
