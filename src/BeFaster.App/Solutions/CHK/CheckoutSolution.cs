@@ -83,11 +83,13 @@ namespace BeFaster.App.Solutions.CHK
                     }
                 }
                 var discountOffers = priceOffers.FindAll(x => x.Sku == item.Sku);
+                var qty = item.Qty;
                 foreach (var discountOffer in discountOffers)
                 {
-                        withOffer = item.Qty / discountOffer.MinQty;
-                        var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
-                        item.Discount = discount;
+                    withOffer = qty / discountOffer.MinQty;
+                    var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
+                    item.Discount = discount;
+                    qty -= withOffer;
                 }
                 
             }
@@ -136,6 +138,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
