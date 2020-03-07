@@ -33,9 +33,9 @@ namespace BeFaster.App.Solutions.CHK
             if (string.IsNullOrEmpty(skus)) return 0;
             List<string> shoppingList = skus.Split(',').ToList();
             
-            var tempList = shoppingList;
+            var IndividualItems = shoppingList.Select(x => x).Distinct().ToList();
             var totalPrice = 0;
-            tempList.ForEach(item => {
+            IndividualItems.ForEach(item => {
                 if (IsValidItem(item))
                 {
                     var noOfItems = shoppingList.Where(x => x == item).Count();
@@ -46,10 +46,9 @@ namespace BeFaster.App.Solutions.CHK
                     var offerdPrice = Int32.Parse(offer.Split('-')[1]);
                     totalPrice = totalPrice + withOffer * offerdPrice + withOffer * priceList[item];
                 }
-                tempList.RemoveAll(x => x == item);
-
             });
             return totalPrice;
         }
     }
 }
+
