@@ -59,7 +59,7 @@ namespace BeFaster.App.Solutions.CHK
                         var withoutOffer = noOfItems % noInOffer;
                         var withOffer = noOfItems / noInOffer;
                         var offerdPrice = Int32.Parse(offer.Split('-')[1]);
-                        totalPrice = totalPrice + withOffer * offerdPrice + withOffer * priceList[item];
+                        totalPrice = totalPrice + withOffer * offerdPrice + withoutOffer * priceList[item];
                     }
                     else
                     {
@@ -71,3 +71,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
