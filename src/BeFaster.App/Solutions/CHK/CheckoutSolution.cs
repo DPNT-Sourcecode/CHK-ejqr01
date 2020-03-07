@@ -79,23 +79,32 @@ namespace BeFaster.App.Solutions.CHK
                     if (shoppingList.Find(x => x.Sku == offer.OfferedProduct) != null)
                     {
                         applied = Math.Min(withOffer, shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty);
-                        shoppingList.Find(x => x.Sku == offer.OfferedProduct).Qty -= applied;
-                        shoppingList.Find(x => x.Sku == offer.OfferedProduct).Discount = 0;
+                        var temp = shoppingList.Find(x => x.Sku == offer.OfferedProduct);
+                        temp.Qty -= applied;
+                        temp.Discount = 0;
+                        PriceReductionOffer(item);
                     }
-                }
-                var discountOffers = priceOffers.FindAll(x => x.Sku == item.Sku);
-                var qty = item.Qty;
-                foreach (var discountOffer in discountOffers)
-                {
-                    withOffer = qty / discountOffer.MinQty;
-                    var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
-                    item.Discount += discount;
-                    qty -= withOffer * discountOffer.MinQty;
-                    if (qty == 0) break;
-                }
-                
+                };
+                 PriceReductionOffer(item);
+
             }
         }
+
+        private static void PriceReductionOffer(BasketItem item)
+        {
+            var discountOffers = priceOffers.FindAll(x => x.Sku == item.Sku);
+            var qty = item.Qty;
+            foreach (var discountOffer in discountOffers)
+            {
+                var withOffer = qty / discountOffer.MinQty;
+                var discount = withOffer * discountOffer.MinQty * item.UnitPrice - withOffer * discountOffer.OfferedPrice;
+                item.Discount += discount;
+                qty -= withOffer * discountOffer.MinQty;
+                if (qty == 0) break;
+            }
+
+        }
+
         public static int ComputePrice(string skus)
         {
             if (string.IsNullOrWhiteSpace(skus)) return 0;
@@ -140,4 +149,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
