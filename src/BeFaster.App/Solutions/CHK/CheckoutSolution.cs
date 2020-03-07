@@ -63,7 +63,7 @@ namespace BeFaster.App.Solutions.CHK
                     }
                     else
                     {
-                        totalPrice = noOfItems * priceList[item];
+                        totalPrice = totalPrice + noOfItems * priceList[item];
                     }
                 }
             });
@@ -71,4 +71,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
