@@ -8,10 +8,19 @@ namespace BeFaster.App.Tests.Solutions.CHK
     public class CHKSolutionTest
     {
         [TestCase("A", ExpectedResult = true)]
-        public bool CheckIfIsLegalShoppingList(string skus)
+        [TestCase("ABCD", ExpectedResult = true)]
+        [TestCase("AAA", ExpectedResult = true)]
+        public bool CheckIfIsLegalShoppingListAndReturnTrue(string skus)
+        {
+            return CheckoutSolution.IsLegalInput(skus);
+        }
+        [TestCase("-", ExpectedResult = false)]
+        [TestCase("", ExpectedResult = false)]
+        [TestCase("  ", ExpectedResult = false)]
+        [TestCase("E", ExpectedResult = false)]
+        public bool CheckIfIsLegalShoppingListAndReturnFalse(string skus)
         {
             return CheckoutSolution.IsLegalInput(skus);
         }
     }
 }
-
