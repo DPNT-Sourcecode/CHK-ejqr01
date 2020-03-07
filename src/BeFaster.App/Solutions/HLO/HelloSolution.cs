@@ -4,9 +4,10 @@ namespace BeFaster.App.Solutions.HLO
 {
     public static class HelloSolution
     {
+        private const string HELLO_WORLD = "Hello World";
         public static string Hello(string friendName)
         {
-            throw new SolutionNotImplementedException();
+            return HELLO_WORLD;
         }
     }
 }
