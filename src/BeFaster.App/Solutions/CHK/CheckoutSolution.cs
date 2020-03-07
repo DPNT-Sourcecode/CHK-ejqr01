@@ -1,45 +1,53 @@
-﻿using BeFaster.Runner.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BeFaster.App.Solutions.CHK
 {
     public static class CheckoutSolution
     {
-        private static readonly IDictionary<string, int> priceList = new Dictionary<string, int>()
+        private static readonly IDictionary<char, int> priceList = new Dictionary<char, int>()
         {
-            {"A",50 },
-            {"B",30 },
-            {"C",20 },
-            {"D",15 }
+            {'A',50 },
+            {'B',30 },
+            {'C',20 },
+            {'D',15 }
         };
-        private static readonly IDictionary<string, string> offers = new Dictionary<string, string>()
+        private static readonly IDictionary<char, string> offers = new Dictionary<char, string>()
         {
-            {"A", "3-130"},
-            {"2B","2-45" }
+            {'A', "3-130"},
+            {'B',"2-45" }
         };
-        private static bool IsValidItem(string item)
+        private static bool IsValidItem(char item)
         {
-            if (string.IsNullOrWhiteSpace(item)) return false;
             if (priceList.ContainsKey(item))
             {
                 return true;
             }
             return false;
         }
+        private static bool IsLegalInput(string skus)
+        {
+            if (Regex.Matches(skus, @"[A-D]").Count > 0) 
+                return false;
+            return true;
+        }
         public static int ComputePrice(string skus)
         {
             if (string.IsNullOrEmpty(skus)) return 0;
-            List<string> shoppingList = skus.Split(',').ToList();
-            
+            if (!IsLegalInput(skus))
+                return -1;
+            List<char> shoppingList = skus.ToCharArray().ToList();
+
             var IndividualItems = shoppingList.Select(x => x).Distinct().ToList();
             var totalPrice = 0;
-            IndividualItems.ForEach(item => {
+            IndividualItems.ForEach(item =>
+            {
                 if (IsValidItem(item))
                 {
                     var noOfItems = shoppingList.Where(x => x == item).Count();
-                    if(offers.ContainsKey(item))
+                    if (offers.ContainsKey(item))
                     {
                         var offer = offers[item];
                         var noInOffer = Int32.Parse(offer.Split('-')[0]);
@@ -58,3 +66,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
