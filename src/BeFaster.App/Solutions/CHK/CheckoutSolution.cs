@@ -119,8 +119,9 @@ namespace BeFaster.App.Solutions.CHK
                     }
                 };
                  PriceReductionOffer(item);
-                GroupDiscount();
             }
+            GroupDiscount();
+
         }
         private static void GroupDiscount()
         {
@@ -220,3 +221,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
