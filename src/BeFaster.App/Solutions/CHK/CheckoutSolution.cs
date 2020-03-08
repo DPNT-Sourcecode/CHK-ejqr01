@@ -154,6 +154,10 @@ namespace BeFaster.App.Solutions.CHK
         private static int UpdateShoppingList(int totalQty, string sku)
         {
             var _item = shoppingList.Find(x => x.Sku == sku);
+            if(totalQty < _item.Qty)
+            {
+                shoppingList.Add(new BasketItem(_item.Sku, _item.Qty - totalQty, _item.UnitPrice));
+            }
             if (_item != null)
             {
                 totalQty -= Math.Min(_item.Qty, totalQty);
@@ -221,5 +225,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
