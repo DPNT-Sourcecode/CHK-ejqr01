@@ -158,12 +158,12 @@ namespace BeFaster.App.Solutions.CHK
             if(totalQty < _item.Qty)
             {
                 shoppingList.Add(new BasketItem(_item.Sku, _item.Qty - totalQty, _item.UnitPrice));
+                _item.Qty = totalQty;
             }
-            if (_item != null)
-            {
-                totalQty -= Math.Min(_item.Qty, totalQty);
-                _item.UnitPrice = 15;
-            }
+            
+            totalQty -= Math.Min(_item.Qty, totalQty);
+            _item.UnitPrice = 15;
+            
             return totalQty;
         }
 
@@ -226,6 +226,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
