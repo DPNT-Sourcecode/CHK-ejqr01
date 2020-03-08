@@ -119,8 +119,46 @@ namespace BeFaster.App.Solutions.CHK
                     }
                 };
                  PriceReductionOffer(item);
-
+                GroupDiscount();
             }
+        }
+        private static void GroupDiscount()
+        {
+            var _groupList = shoppingList.FindAll(x => x.Sku == "S" ||
+                                                    x.Sku == "T" ||
+                                                    x.Sku == "X" ||
+                                                    x.Sku == "Y" ||
+                                                    x.Sku == "Z");
+            if (_groupList == null) return;
+            var totalQty = 0;
+            foreach (var item in _groupList)
+            {
+                totalQty += item.Qty;
+            }
+            
+            if (totalQty < 3) return;
+            totalQty = (totalQty / 3) * 3;
+            totalQty= UpdateShoppingList( totalQty, "Z");
+            if (totalQty < 1) return;
+            totalQty = UpdateShoppingList(totalQty, "Y");
+            if (totalQty < 1) return;
+            totalQty = UpdateShoppingList(totalQty, "S");
+            if (totalQty < 1) return;
+            totalQty = UpdateShoppingList(totalQty, "T");
+            if (totalQty < 1) return;
+            totalQty = UpdateShoppingList(totalQty, "X");
+            if (totalQty < 1) return;
+        }
+
+        private static int UpdateShoppingList(int totalQty, string sku)
+        {
+            var _item = shoppingList.Find(x => x.Sku == sku);
+            if (_item != null)
+            {
+                totalQty -= Math.Min(_item.Qty, totalQty);
+                _item.UnitPrice = 15;
+            }
+            return totalQty;
         }
 
         private static void PriceReductionOffer(BasketItem item)
