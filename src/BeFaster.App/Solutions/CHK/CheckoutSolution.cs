@@ -54,7 +54,7 @@ namespace BeFaster.App.Solutions.CHK
             {new PriceOffer(){Sku="F",MinQty=3,OfferedPrice=20} },
             {new PriceOffer(){Sku="H",MinQty=10,OfferedPrice=80} },
             {new PriceOffer(){Sku="H",MinQty=5,OfferedPrice=45} },
-            {new PriceOffer(){Sku="K",MinQty=2,OfferedPrice=150} },
+            {new PriceOffer(){Sku="K",MinQty=2,OfferedPrice=120} },
             {new PriceOffer(){Sku="P",MinQty=5,OfferedPrice=200} },
             {new PriceOffer(){Sku="Q",MinQty=3,OfferedPrice=80} },
             {new PriceOffer(){Sku="U",MinQty=4,OfferedPrice=120} },
@@ -79,7 +79,7 @@ namespace BeFaster.App.Solutions.CHK
             {new Product("H",10) },
             {new Product("I",35) },
             {new Product("J",60) },
-            {new Product("K",80) },
+            {new Product("K",70) },
             {new Product("L",90) },
             {new Product("M",15)},
             {new Product("N",40) },
@@ -87,14 +87,14 @@ namespace BeFaster.App.Solutions.CHK
             {new Product("P",50) },
             {new Product("Q",30) },
             {new Product("R",50) },
-            {new Product("S",30) },
+            {new Product("S",20) },
             {new Product("T",20) },
             {new Product("U",40) },
             {new Product("V",50) },
             {new Product("W",20) },
-            {new Product("X",90) },
-            {new Product("Y",10) },
-            {new Product("Z",50) }
+            {new Product("X",17) },
+            {new Product("Y",20) },
+            {new Product("Z",21) }
         };
         static void ApplyOffers()
         {
@@ -221,4 +221,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
